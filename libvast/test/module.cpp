@@ -6,22 +6,30 @@
 // SPDX-FileCopyrightText: (c) 2022 The VAST Contributors
 // SPDX-License-Identifier: BSD-3-Clause
 
+#define SUITE module
+
 #include "vast/module.hpp"
 
+#include "vast/aliases.hpp"
+#include "vast/data.hpp"
 #include "vast/test/test.hpp"
+
+using namespace vast;
 
 TEST(multiple members) {
   auto x = module_ng{};
-  auto table = symbol_table{};
+  type y = type{};
+  auto table = symbol_table_ng{};
   auto r = record{
-    {"module", string{"foo"}},
-    {"description", string{"blab"}},
-    {"references", list{{string{"http://foo.com"}},
-                        {string{"https://www.google.com/search?q=foo"}}}},
+    {"module", std::string{"foo"}},
+    {"description", std::string{"blab"}},
+    {"references", list{{std::string{"http://foo.com"}},
+                        {std::string{"https://www.google.com/search?q=foo"}}}},
     {"types",
-     record{{"id", record{{"type", string{"string"}},
-                          {"description", string{"A random unique ID with..."}},
-                          {"attributes", record{{"index", string{"has"
+     record{
+       {"id", record{{"type", std::string{"string"}},
+                     {"description", std::string{"A random unique ID with..."}},
+                     {"attributes", record{{"index", std::string{"has"
                                                                  "h"}}}}}}}}};
-  REQUIRE_SUCCESS(convert(r, x, table));
+  REQUIRE_SUCCESS(convert(r, y, table)); // FIXME: x instead of y
 }
