@@ -431,11 +431,11 @@ if (VAST_ENABLE_ASAN)
   # We need to enable the address sanitizer both globally and for the
   # libvast_internal targets in order to build (1) the bundled CAF with it and
   # (2) build external plugins with it.
-  add_compile_options(-fsanitize=address -fno-omit-frame-pointer)
-  add_link_options(-fsanitize=address)
-  target_compile_options(libvast_internal INTERFACE -fsanitize=address
+  add_compile_options(-fsanitize=address,fuzzer -fno-omit-frame-pointer)
+  add_link_options(-fsanitize=address,fuzzer)
+  target_compile_options(libvast_internal INTERFACE -fsanitize=address,fuzzer
                                                     -fno-omit-frame-pointer)
-  target_link_libraries(libvast_internal INTERFACE -fsanitize=address)
+  target_link_libraries(libvast_internal INTERFACE -fsanitize=address,fuzzer)
 endif ()
 
 # Undefined Behavior Sanitizer
